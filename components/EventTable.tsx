@@ -21,7 +21,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { sampleEvents, ServerEvent } from "@/app/devData";
+import { ServerEvent } from "@/types";
 
 const eventTypes = [
   "All",
@@ -42,7 +42,11 @@ const statusColorMap: Record<
   warning: "warning",
 };
 
-export const EventTable = () => {
+interface EventTableProps {
+  data: ServerEvent[];
+}
+
+export const EventTable = ({ data }: EventTableProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState<string>("All");
   const [selectedStatus, setSelectedStatus] = useState<string>("All");
@@ -50,7 +54,7 @@ export const EventTable = () => {
   const rowsPerPage = 10;
 
   const filteredEvents = useMemo(() => {
-    return sampleEvents.filter((event) => {
+    return data.filter((event) => {
       const matchesSearchTerm = event.message
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
@@ -60,7 +64,7 @@ export const EventTable = () => {
 
       return matchesSearchTerm && matchesType && matchesStatus;
     });
-  }, [searchTerm, selectedType, selectedStatus]);
+  }, [searchTerm, selectedType, selectedStatus, data]);
 
   const paginatedEvents = useMemo(() => {
     const start = (currentPage - 1) * rowsPerPage;
@@ -76,7 +80,7 @@ export const EventTable = () => {
       <CardHeader>
         <h2 className="text-xl font-semibold">Server Events</h2>
         <Spacer y={4} />
-        <div className="flex gap-4 items-center">
+        <div className="flex items-center justify-between">
           <Input
             isClearable
             aria-label="Search events by message"
@@ -127,7 +131,7 @@ export const EventTable = () => {
             <TableColumn>MESSAGE</TableColumn>
             <TableColumn>STATUS</TableColumn>
           </TableHeader>
-          <TableBody emptyContent={"No events found."} items={filteredEvents}>
+          <TableBody emptyContent={"No events found."} items={paginatedEvents}>
             {(item) => (
               <TableRow key={item.id}>
                 <TableCell>
@@ -149,7 +153,7 @@ export const EventTable = () => {
           </TableBody>
         </Table>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="relative flex items-center p-6 pt-0">
         <p className="text-sm text-default-500 mb-2 sm:mb-0">
           Showing{" "}
           {paginatedEvents.length > 0 ? (currentPage - 1) * rowsPerPage + 1 : 0}
@@ -159,6 +163,7 @@ export const EventTable = () => {
         {totalPages > 1 && (
           <Pagination
             showControls
+            className="absolute left-1/2 transform -translate-x-1/2"
             color="primary"
             initialPage={1}
             page={currentPage}

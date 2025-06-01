@@ -1,12 +1,8 @@
-export interface ServerEvent {
-  id: string;
-  timestamp: string;
-  type: "API Request" | "User Login" | "System Update" | "ErrorLog";
-  message: string;
-  status: "success" | "error" | "info" | "warning";
-}
+import { nanoid } from "nanoid";
 
-const generateRandomEvent = (index: number): ServerEvent => {
+import { ServerEvent } from "@/types";
+
+export const generateRandomEvent = (): ServerEvent => {
   const types: ServerEvent["type"][] = [
     "API Request",
     "User Login",
@@ -77,7 +73,7 @@ const generateRandomEvent = (index: number): ServerEvent => {
     );
 
   return {
-    id: `evt-${String(index).padStart(3, "0")}`,
+    id: `evt-${String(nanoid(6)).padStart(3, "0")}`,
     timestamp: new Date(
       Date.now() - 1000 * 60 * Math.floor(Math.random() * 60 * 24),
     ).toISOString(), // Random time in last 24 hours
@@ -87,6 +83,6 @@ const generateRandomEvent = (index: number): ServerEvent => {
   };
 };
 
-export const sampleEvents: ServerEvent[] = Array.from({ length: 50 }, (_, i) =>
-  generateRandomEvent(i + 1),
+export const sampleEvents: ServerEvent[] = Array.from({ length: 50 }, (_i) =>
+  generateRandomEvent(),
 );

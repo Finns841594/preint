@@ -3,21 +3,54 @@ import { useState, useEffect } from "react";
 
 import { title } from "@/components/primitives";
 import { ChartAreaGradient } from "@/components/AreaChartDemo";
-import { ChartData } from "@/types";
+import { ChartData, ServerEvent } from "@/types";
 import { ChartBarLabelCustom } from "@/components/BarChartDemo";
 import { ChartPieLabelList } from "@/components/PieChartDemo";
 import { EventTable } from "@/components/EventTable";
 
+const MAX_EVENTS_IN_TABLE_STATE = 100;
+
 export default function Home() {
-  const [data, setData] = useState<ChartData[]>([]);
+  const [chartStreamData, setChartStreamData] = useState<ChartData[]>([]);
+  const [eventTableStreamData, setEventTableStreamData] = useState<
+    ServerEvent[]
+  >([]);
 
   useEffect(() => {
     const eventSource = new EventSource("/api/stream");
 
-    eventSource.onmessage = (event) => {
-      const parsed: ChartData = JSON.parse(event.data);
+    eventSource.addEventListener("chartDataUpdate", (event) => {
+      try {
+        const parsed: ChartData = JSON.parse(event.data);
 
-      setData((prev) => [...prev.slice(-19), parsed]); // keep last 20 points
+        setChartStreamData((prev) => [...prev.slice(-29), parsed]);
+      } catch (error) {
+        console.error("Failed to parse chart data:", error);
+      }
+    });
+
+    eventSource.addEventListener("newServerEvent", (event) => {
+      try {
+        const newEvent: ServerEvent = JSON.parse(event.data);
+
+        setEventTableStreamData((prevEvents) => {
+          const updatedEvents = [newEvent, ...prevEvents];
+
+          if (updatedEvents.length > MAX_EVENTS_IN_TABLE_STATE + 20) {
+            // Keep a buffer
+            return updatedEvents.slice(0, MAX_EVENTS_IN_TABLE_STATE);
+          }
+
+          return updatedEvents;
+        });
+      } catch (error) {
+        console.error("Failed to parse server event data for table:", error);
+      }
+    });
+
+    eventSource.onerror = (error) => {
+      console.error("EventSource failed for chart data:", error);
+      eventSource.close();
     };
 
     return () => {
@@ -31,13 +64,13 @@ export default function Home() {
         <span className={title()}>Dashboard&nbsp;</span>
       </div>
 
-      <div className="flex gap-3">
-        <ChartAreaGradient data={data} />
+      <div className="flex justify-between w-full gap-4">
+        <ChartAreaGradient data={chartStreamData} />
         <ChartBarLabelCustom />
         <ChartPieLabelList />
       </div>
       <div className="w-full">
-        <EventTable />
+        <EventTable data={eventTableStreamData} />
       </div>
     </section>
   );
