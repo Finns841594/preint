@@ -52,7 +52,7 @@ const chartConfig = {
 
 export function ChartBarLabelCustom() {
   return (
-    <Card>
+    <Card className="flex flex-col justify-between">
       <CardHeader>
         <CardTitle>Bar Chart - Custom Label</CardTitle>
         <CardDescription>January - June 2024</CardDescription>

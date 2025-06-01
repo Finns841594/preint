@@ -56,12 +56,12 @@ const chartConfig = {
 
 export function ChartPieLabelList() {
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
+    <Card className="flex flex-col justify-between">
+      <CardHeader>
         <CardTitle>Pie Chart - Label List</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent>
         <ChartContainer
           className="[&_.recharts-text]:fill-background mx-auto aspect-square max-h-[250px]"
           config={chartConfig}
@@ -84,7 +84,7 @@ export function ChartPieLabelList() {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
+      <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex items-center gap-2 leading-none font-medium">
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>

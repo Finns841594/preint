@@ -38,7 +38,7 @@ interface ChartAreaGradientProps {
 
 export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
   return (
-    <Card className="w-[500px]">
+    <Card className="w-[500px] flex flex-col justify-between">
       <CardHeader>
         <CardTitle>Total visit</CardTitle>
         <CardDescription>
