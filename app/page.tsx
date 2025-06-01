@@ -6,6 +6,7 @@ import { ChartAreaGradient } from "@/components/AreaChartDemo";
 import { ChartData } from "@/types";
 import { ChartBarLabelCustom } from "@/components/BarChartDemo";
 import { ChartPieLabelList } from "@/components/PieChartDemo";
+import { EventTable } from "@/components/EventTable";
 
 export default function Home() {
   const [data, setData] = useState<ChartData[]>([]);
@@ -34,6 +35,9 @@ export default function Home() {
         <ChartAreaGradient data={data} />
         <ChartBarLabelCustom />
         <ChartPieLabelList />
+      </div>
+      <div className="w-full">
+        <EventTable />
       </div>
     </section>
   );

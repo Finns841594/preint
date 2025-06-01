@@ -2,6 +2,8 @@
 
 import { TrendingUp } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { useMemo, useState } from "react";
+import { Select, SelectItem } from "@heroui/select";
 
 import {
   Card,
@@ -36,14 +38,43 @@ interface ChartAreaGradientProps {
   data: ChartData[];
 }
 
+const fitlerOpitions = [
+  "last minute",
+  "last 5 minutes",
+  "last 10 minutes",
+  "last 30 minutes",
+];
+
 export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
+  const [selectedKeys, setSelectedKeys] = useState(["last minute"]);
+
+  const selectedValue = useMemo(
+    () => Array.from(selectedKeys).join(", ").replace(/_/g, ""),
+    [selectedKeys],
+  );
+
   return (
     <Card className="w-[500px] flex flex-col justify-between">
-      <CardHeader>
-        <CardTitle>Total visit</CardTitle>
-        <CardDescription>
-          Showing total visitors for the past minutes
-        </CardDescription>
+      <CardHeader className="flex flex-row justify-between items-center">
+        <div>
+          <CardTitle>Total visit</CardTitle>
+          <CardDescription>
+            Showing total visitors for the past minutes
+          </CardDescription>
+        </div>
+        <Select
+          className="w-[150px]"
+          defaultSelectedKeys={["last minute"]}
+          label="Data Range"
+          placeholder="Select an range"
+          value={selectedValue}
+          variant="bordered"
+          onChange={(event) => setSelectedKeys([event.target.value])}
+        >
+          {fitlerOpitions.map((opition) => (
+            <SelectItem key={opition}>{opition}</SelectItem>
+          ))}
+        </Select>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
