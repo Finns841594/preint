@@ -21,23 +21,14 @@ import { ChartData } from "@/types";
 
 export const description = "An area chart with gradient fill";
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
 const chartConfig = {
   value1: {
     label: "Desktop",
-    color: "var(--chart-1)",
+    color: "hsl(var(--chart-1))",
   },
   value2: {
     label: "Mobile",
-    color: "var(--chart-2)",
+    color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 
@@ -49,9 +40,9 @@ export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
   return (
     <Card className="w-[500px]">
       <CardHeader>
-        <CardTitle>Area Chart - Gradient</CardTitle>
+        <CardTitle>Total visit</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          Showing total visitors for the past minutes
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -78,24 +69,24 @@ export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
               <linearGradient id="fillDesktop" x1="0" x2="0" y1="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="hsl(var(--chart-1))"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="hsl(var(--chart-1))"
                   stopOpacity={0.1}
                 />
               </linearGradient>
               <linearGradient id="fillMobile" x1="0" x2="0" y1="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-mobile)"
+                  stopColor="hsl(var(--chart-2))"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-mobile)"
+                  stopColor="hsl(var(--chart-2))"
                   stopOpacity={0.1}
                 />
               </linearGradient>
@@ -106,7 +97,7 @@ export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
               fillOpacity={0.4}
               isAnimationActive={false}
               stackId="a"
-              stroke="var(--color-mobile)"
+              stroke="hsl(var(--chart-2))"
               type="natural"
             />
             <Area
@@ -115,7 +106,7 @@ export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
               fillOpacity={0.4}
               isAnimationActive={false}
               stackId="a"
-              stroke="var(--color-desktop)"
+              stroke="hsl(var(--chart-1))"
               type="natural"
             />
           </AreaChart>
@@ -125,10 +116,10 @@ export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 leading-none font-medium">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+              Trending up by 5.2% today <TrendingUp className="h-4 w-4" />
             </div>
             <div className="text-muted-foreground flex items-center gap-2 leading-none">
-              January - June 2024
+              May 2025
             </div>
           </div>
         </div>

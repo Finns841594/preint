@@ -2,8 +2,10 @@
 import { useState, useEffect } from "react";
 
 import { title } from "@/components/primitives";
-import { ChartAreaGradient } from "@/components/ChartGraph";
+import { ChartAreaGradient } from "@/components/AreaChartDemo";
 import { ChartData } from "@/types";
+import { ChartBarLabelCustom } from "@/components/BarChartDemo";
+import { ChartPieLabelList } from "@/components/PieChartDemo";
 
 export default function Home() {
   const [data, setData] = useState<ChartData[]>([]);
@@ -35,6 +37,8 @@ export default function Home() {
 
       <div className="flex gap-3">
         <ChartAreaGradient data={data} />
+        <ChartBarLabelCustom />
+        <ChartPieLabelList />
       </div>
     </section>
   );
