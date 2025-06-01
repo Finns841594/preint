@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { addToast } from "@heroui/toast";
 
 import { title } from "@/components/primitives";
 import { ChartAreaGradient } from "@/components/AreaChartDemo";
@@ -25,7 +26,10 @@ export default function Home() {
 
         setChartStreamData((prev) => [...prev.slice(-29), parsed]);
       } catch (error) {
-        console.error("Failed to parse chart data:", error);
+        addToast({
+          title: "Error",
+          description: "Failed to parse chart data: " + error,
+        });
       }
     });
 
@@ -44,12 +48,18 @@ export default function Home() {
           return updatedEvents;
         });
       } catch (error) {
-        console.error("Failed to parse server event data for table:", error);
+        addToast({
+          title: "Error",
+          description: "Failed to parse new server event: " + error,
+        });
       }
     });
 
     eventSource.onerror = (error) => {
-      console.error("EventSource failed for chart data:", error);
+      addToast({
+        title: "Error",
+        description: "An error occurred with the event stream: " + error,
+      });
       eventSource.close();
     };
 
