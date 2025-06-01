@@ -9,7 +9,8 @@ export async function GET(req: NextRequest) {
   const interval = setInterval(() => {
     const data = {
       timestamp: new Date().toISOString(),
-      value: Math.random().toFixed(3),
+      value1: Math.random().toFixed(3),
+      value2: Math.random().toFixed(3),
     };
 
     writer.write(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));

@@ -1,7 +1,7 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ChartData } from "@/types";
 
 export const description = "An area chart with gradient fill";
 
@@ -30,19 +31,23 @@ const chartData = [
 ];
 
 const chartConfig = {
-  desktop: {
+  value1: {
     label: "Desktop",
     color: "var(--chart-1)",
   },
-  mobile: {
+  value2: {
     label: "Mobile",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
-export function ChartAreaGradient() {
+interface ChartAreaGradientProps {
+  data: ChartData[];
+}
+
+export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
   return (
-    <Card>
+    <Card className="w-[500px]">
       <CardHeader>
         <CardTitle>Area Chart - Gradient</CardTitle>
         <CardDescription>
@@ -53,20 +58,21 @@ export function ChartAreaGradient() {
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             margin={{
-              left: 12,
-              right: 12,
+              left: 6,
+              right: 6,
             }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
               axisLine={false}
-              dataKey="month"
-              tickFormatter={(value) => value.slice(0, 3)}
+              dataKey="timestamp"
+              tickFormatter={(value) => value.slice(14, 19)}
               tickLine={false}
               tickMargin={8}
             />
+            <YAxis tick={{ fontSize: 10 }} width={20} />
             <ChartTooltip content={<ChartTooltipContent />} cursor={false} />
             <defs>
               <linearGradient id="fillDesktop" x1="0" x2="0" y1="0" y2="1">
@@ -95,17 +101,19 @@ export function ChartAreaGradient() {
               </linearGradient>
             </defs>
             <Area
-              dataKey="mobile"
+              dataKey="value1"
               fill="url(#fillMobile)"
               fillOpacity={0.4}
+              isAnimationActive={false}
               stackId="a"
               stroke="var(--color-mobile)"
               type="natural"
             />
             <Area
-              dataKey="desktop"
+              dataKey="value2"
               fill="url(#fillDesktop)"
               fillOpacity={0.4}
+              isAnimationActive={false}
               stackId="a"
               stroke="var(--color-desktop)"
               type="natural"
