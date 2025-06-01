@@ -10,6 +10,7 @@ import { ChartPieLabelList } from "@/components/PieChartDemo";
 import { EventTable } from "@/components/EventTable";
 
 const MAX_EVENTS_IN_TABLE_STATE = 100;
+const MAX_CHART_DATA_POINTS = 30;
 
 export default function Home() {
   const [chartStreamData, setChartStreamData] = useState<ChartData[]>([]);
@@ -24,7 +25,10 @@ export default function Home() {
       try {
         const parsed: ChartData = JSON.parse(event.data);
 
-        setChartStreamData((prev) => [...prev.slice(-29), parsed]);
+        setChartStreamData((prev) => [
+          ...prev.slice(-MAX_CHART_DATA_POINTS),
+          parsed,
+        ]);
       } catch (error) {
         addToast({
           title: "Error",
@@ -41,7 +45,6 @@ export default function Home() {
           const updatedEvents = [newEvent, ...prevEvents];
 
           if (updatedEvents.length > MAX_EVENTS_IN_TABLE_STATE + 20) {
-            // Keep a buffer
             return updatedEvents.slice(0, MAX_EVENTS_IN_TABLE_STATE);
           }
 

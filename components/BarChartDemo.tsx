@@ -50,7 +50,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function ChartBarLabelCustom() {
+export const ChartBarLabelCustom = () => {
   return (
     <Card className="flex flex-col justify-between">
       <CardHeader>
@@ -116,4 +116,4 @@ export function ChartBarLabelCustom() {
       </CardFooter>
     </Card>
   );
-}
+};

@@ -32,7 +32,6 @@ export const generateRandomEvent = (): ServerEvent => {
   const randomMessageTemplate =
     messages[Math.floor(Math.random() * messages.length)];
 
-  // Simple template replacement
   const populatedMessage = randomMessageTemplate
     .replace("{user}", `user_${Math.floor(Math.random() * 100)}`)
     .replace("{ip}", `192.168.1.${Math.floor(Math.random() * 255)}`)

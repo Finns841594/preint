@@ -54,7 +54,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function ChartPieLabelList() {
+export const ChartPieLabelList = () => {
   return (
     <Card className="flex flex-col justify-between">
       <CardHeader>
@@ -94,4 +94,4 @@ export function ChartPieLabelList() {
       </CardFooter>
     </Card>
   );
-}
+};

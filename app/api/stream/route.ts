@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 
 import { generateRandomEvent } from "@/app/devData";
 
-export async function GET(req: NextRequest) {
+export const GET = async (req: NextRequest) => {
   const { readable, writable } = new TransformStream();
   const writer = writable.getWriter();
   const encoder = new TextEncoder();
@@ -13,7 +13,6 @@ export async function GET(req: NextRequest) {
   };
 
   const interval = setInterval(() => {
-    // Send chart data
     const chartData = {
       timestamp: new Date().toISOString(),
       value1: Math.random().toFixed(3),
@@ -27,7 +26,7 @@ export async function GET(req: NextRequest) {
 
       sendEvent("newServerEvent", serverEventData);
     }
-  }, 1000); // Interval for sending data (e.g., every 1 second)
+  }, 1000);
 
   req.signal.addEventListener("abort", () => {
     clearInterval(interval);
@@ -41,4 +40,4 @@ export async function GET(req: NextRequest) {
       Connection: "keep-alive",
     },
   });
-}
+};

@@ -45,7 +45,7 @@ const fitlerOpitions = [
   "last 30 minutes",
 ];
 
-export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
+export const ChartAreaGradient = ({ data }: ChartAreaGradientProps) => {
   const [selectedKeys, setSelectedKeys] = useState(["last minute"]);
 
   const selectedValue = useMemo(
@@ -65,10 +65,7 @@ export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
         <Select
           className="w-[150px]"
           defaultSelectedKeys={["last minute"]}
-          label="Data Range"
-          placeholder="Select an range"
           value={selectedValue}
-          variant="bordered"
           onChange={(event) => setSelectedKeys([event.target.value])}
         >
           {fitlerOpitions.map((opition) => (
@@ -157,4 +154,4 @@ export function ChartAreaGradient({ data }: ChartAreaGradientProps) {
       </CardFooter>
     </Card>
   );
-}
+};
