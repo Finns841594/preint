@@ -54,7 +54,7 @@ export const ChartBarLabelCustom = () => {
   return (
     <Card className="flex flex-col justify-between">
       <CardHeader>
-        <CardTitle>Bar Chart - Custom Label</CardTitle>
+        <CardTitle>Statistics Data - Processed Events</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
@@ -111,7 +111,7 @@ export const ChartBarLabelCustom = () => {
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+          Showing total events handled for the last 6 months
         </div>
       </CardFooter>
     </Card>

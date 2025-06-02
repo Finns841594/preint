@@ -57,9 +57,9 @@ export const ChartAreaGradient = ({ data }: ChartAreaGradientProps) => {
     <Card className="w-[500px] flex flex-col justify-between">
       <CardHeader className="flex flex-row justify-between items-center">
         <div>
-          <CardTitle>Total visit</CardTitle>
+          <CardTitle>Streaming Data - Latency</CardTitle>
           <CardDescription>
-            Showing total visitors for the past minutes
+            System latency
           </CardDescription>
         </div>
         <Select

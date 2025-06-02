@@ -58,7 +58,7 @@ export const ChartPieLabelList = () => {
   return (
     <Card className="flex flex-col justify-between">
       <CardHeader>
-        <CardTitle>Pie Chart - Label List</CardTitle>
+        <CardTitle>Statistics Data - Visit Platform</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
