@@ -1,13 +1,14 @@
 import { NextRequest } from "next/server";
 
 import { generateRandomEvent } from "@/app/devData";
+import { ChartData, ServerEvent } from "@/types";
 
 export const GET = async (req: NextRequest) => {
   const { readable, writable } = new TransformStream();
   const writer = writable.getWriter();
   const encoder = new TextEncoder();
 
-  const sendEvent = (eventName: string, data: any) => {
+  const sendEvent = (eventName: string, data: ServerEvent | ChartData) => {
     writer.write(encoder.encode(`event: ${eventName}\n`));
     writer.write(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
   };
@@ -17,7 +18,7 @@ export const GET = async (req: NextRequest) => {
       timestamp: new Date().toISOString(),
       value1: Math.random().toFixed(3),
       value2: Math.random().toFixed(3),
-    };
+    } as ChartData;
 
     sendEvent("chartDataUpdate", chartData);
 
